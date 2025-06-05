@@ -13,7 +13,6 @@ paths:
     get:
       summary: Default route
       description: Returns a welcome message for the API.
-      tags: Default
       responses:
         "200":
           description: Successful response

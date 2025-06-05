@@ -9,9 +9,12 @@ notesRouter.use("/notes", async (req, res) => {
 
 //GET
 
+// SEARCH(GET)
+
 //POST
 
 //PUT
 
 //DELETE
+
 export default notesRouter;

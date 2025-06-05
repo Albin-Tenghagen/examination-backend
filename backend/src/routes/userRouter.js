@@ -7,14 +7,7 @@ userRouter.use("/user", async (req, res) => {
   return res.status(200).json({ message: "default route for the user portal" });
 });
 
-//GET
+// POST(REGISTER)
 
-// SEARCH(GET)
-
-//POST
-
-//PUT
-
-//DELETE
-
+//POST(LOGIN)
 export default userRouter;

@@ -2,7 +2,7 @@ import pg from "pg";
 import dotenv from "dotenv";
 dotenv.config();
 const { Pool } = pg;
-
+// TIMESTAMP CAN BE CREATED IN THE DATABASE!!!!!!!!!!
 const pool = new Pool({
   user: process.env.DBUSER,
   password: process.env.DBPASSWORD,
