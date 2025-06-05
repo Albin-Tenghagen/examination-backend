@@ -1,0 +1,27 @@
+openapi: 3.0.0
+info:
+  title: Examination Backend
+  version: 1.0.0
+  description: API documentation with Swagger UI
+
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+
+paths:
+  /:
+    get:
+      summary: Default route
+      description: Returns a welcome message for the API.
+      tags: Default
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: This is the default route for the api
