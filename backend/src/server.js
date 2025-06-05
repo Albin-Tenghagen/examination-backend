@@ -5,9 +5,12 @@ import cors from "cors";
 dotenv.config();
 const app = express();
 
-//Middleware
+//Middleware/modules
 import { swaggerUi, swaggerDocs } from "./middleware/swagger.js";
+import { testConnection } from "../db/db.js";
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+testConnection();
 
 const PORT = process.env.PORT || 5000;
 app.use(cors());
