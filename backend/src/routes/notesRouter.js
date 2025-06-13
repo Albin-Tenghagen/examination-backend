@@ -1,6 +1,7 @@
 import express from "express";
 import { pool } from "../../db/db.js";
 import jwtAuth from "../middleware/JWT_Auth.js";
+import { timestampCreation } from "../middleware/timestampCreation.js";
 const notesRouter = express.Router();
 
 //GET
@@ -72,7 +73,7 @@ notesRouter.post("/notes", jwtAuth, async (req, res) => {
   }
 
   try {
-    const created_at = new Date();
+    const created_at = timestampCreation();
     const modified_at = created_at;
 
     const result = await pool.query(
@@ -99,11 +100,10 @@ notesRouter.put("/notes/:id", jwtAuth, async (req, res) => {
   }
 
   const userId = req.user.id;
-  const noteId = req.params.id;
+  const noteId = parseInt(req.params.id);
   const { title, text } = req.body;
 
   try {
-    // Check if the note exists and belongs to the user
     const result = await pool.query(
       `SELECT * FROM notes WHERE id = $1 AND user_id = $2`,
       [noteId, userId]
@@ -119,12 +119,12 @@ notesRouter.put("/notes/:id", jwtAuth, async (req, res) => {
 
     const updatedTitle = title || note.title;
     const updatedText = text || note.text;
-    const modifiedAt = new Date();
+    const modifiedAt = timestampCreation();
 
     const updateQuery = await pool.query(
       `UPDATE notes 
        SET title = $1, text = $2, modified_at = $3 
-       WHERE id = $4 AND user_id = $5 
+       WHERE id = $4 AND user_id = $5   
        RETURNING *`,
       [updatedTitle, updatedText, modifiedAt, noteId, userId]
     );
