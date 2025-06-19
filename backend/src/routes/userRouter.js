@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import { pool } from "../../db/db.js";
 import generateToken from "../middleware/JWTgeneration.js";
+import { validateLoginPayload } from "../middleware/JoiValidation/loginValidation.js";
 
 const userRouter = express.Router();
 
@@ -42,6 +43,7 @@ userRouter.post("/users/signup", async (req, res) => {
     );
 
     const newUser = insertResult.rows[0];
+    // const validatedUserInfo = await validateLoginPayload(newUser);
 
     req.user = {
       id: newUser.id,
@@ -67,8 +69,14 @@ userRouter.post("/users/login", async (req, res) => {
   }
   const smallEmail = email.trim().toLowerCase();
   try {
+    const beforeValidation = {
+      email: smallEmail,
+      password: password,
+    };
+
+    const validatedUserInfo = await validateLoginPayload(beforeValidation);
     const result = await pool.query(`SELECT * FROM users WHERE email = $1`, [
-      smallEmail,
+      validatedUserInfo.email,
     ]);
 
     const user = result.rows[0];

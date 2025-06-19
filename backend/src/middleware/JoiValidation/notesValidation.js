@@ -10,5 +10,6 @@ const notesSchema = Joi.object({
 }).options({ abortEarly: false });
 
 export async function validateNotePayload(notePayload) {
+  console.log("Note Joi Validation function called with: ", notePayload);
   return await notesSchema.validateAsync(notePayload);
 }
